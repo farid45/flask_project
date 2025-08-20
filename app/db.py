@@ -1,6 +1,6 @@
 from typing import List
-import model
-import storage
+import app.model as model
+import app.storage as storage
 
 
 class DBException(Exception):

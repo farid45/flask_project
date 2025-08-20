@@ -1,4 +1,4 @@
-from model import Events as EventsModel
+from app.model import Events as EventsModel
 from datetime import datetime
 from typing import Dict, List
 

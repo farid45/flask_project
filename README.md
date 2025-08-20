@@ -4,7 +4,7 @@ pip install -r requirements.txt
 ```
 ## запуск приложения
 ```
-./venv/bin/flask --app ./acme/server.py run
+python3 run.py run
 ```
 
 

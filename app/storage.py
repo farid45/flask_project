@@ -1,5 +1,5 @@
 from typing import List
-import model
+import app.model as model
 class LogicException(Exception):
     pass
 

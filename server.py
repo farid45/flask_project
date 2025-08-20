@@ -1,3 +1,3 @@
-from api import app
+from app.api import app
 
 app
