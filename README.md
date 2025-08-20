@@ -34,10 +34,3 @@ curl http://127.0.0.1:5000/api/v1/events/1/ -X PUT -d "|title|new text"
 ```
 curl http://127.0.0.1:5000/api/v1/events/1/ -X DELETE
 ```
-
-
-## пример исполнения команд с выводом
-
-```
-curl http://127.0.0.1:5000/api/v1/events/ -X POST -d "|title|text"                                                        
-```
