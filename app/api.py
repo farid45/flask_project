@@ -17,7 +17,12 @@ _event_counter = count(1)
 
 
 class ApiException(Exception):
-    pass
+    """Базовое исключение для ошибок API."""
+
+
+class StorageException(Exception):
+    """Исключение для ошибок хранилища."""
+
 
 def _from_raw(raw_note: str) -> model.Events:
     """Преобразует сырые данные в объект Events.
@@ -33,7 +38,7 @@ def _from_raw(raw_note: str) -> model.Events:
     """
     parts = raw_note.split('|')
     events = model.Events()
-    
+
     if len(parts) == 4:  # id|date|title|text
         events.id = parts[0]
         events.dates = parts[1]
@@ -45,11 +50,17 @@ def _from_raw(raw_note: str) -> model.Events:
         events.title = parts[1]
         events.text = parts[2]
     else:
-        raise ApiException(f"invalid RAW note data {raw_note}")
-    
+        error_msg = (
+            f"Неверный формат данных: {raw_note}. "
+            "Ожидаемые форматы: id|date|title|text или date|title|text"
+        )
+        raise ApiException(error_msg)
+
     if not model.Events.validate_date(events.dates):
-        raise ApiException(f"Invalid date format: {events.dates}. Expected YYYY-MM-DD")
-    
+        raise ApiException(
+            f"Неверный формат даты: {events.dates}. Ожидается YYYY-MM-DD"
+        )
+
     return events
 
 
@@ -89,9 +100,11 @@ def create_app():
             event_id = _events_logic.create(events)
             return f"Новый ID: {event_id}", 201
         except ApiException as ex:
-            return f"API error: {ex}", 400
-        except Exception as ex:
-            return f"failed to CREATE with: {ex}", 500
+            return f"Ошибка API: {ex}", 400
+        except ValueError as ex:
+            return f"Ошибка валидации: {ex}", 400
+        except (ImportError, AttributeError, RuntimeError) as ex:
+            return f"Внутренняя ошибка сервера: {ex}", 500
 
     @app.route(EVENTS_API_ROOT + "/", methods=["GET"])
     def list_events():
@@ -106,8 +119,8 @@ def create_app():
             for event in events:
                 raw_notes = raw_notes + _to_raw(event) + '\n'
             return raw_notes, 200
-        except Exception as ex:
-            return f"failed to LIST with: {ex}", 500
+        except (ImportError, AttributeError, RuntimeError) as ex:
+            return f"Ошибка при получении списка: {ex}", 500
 
     @app.route(EVENTS_API_ROOT + "/<_id>/", methods=["GET"])
     def read(_id: str):
@@ -125,8 +138,8 @@ def create_app():
                 return "Событие не найдено", 404
             raw_note = _to_raw(events)
             return raw_note, 200
-        except Exception as ex:
-            return f"failed to READ with: {ex}", 500
+        except (ImportError, AttributeError, RuntimeError) as ex:
+            return f"Ошибка при чтении: {ex}", 500
 
     @app.route(EVENTS_API_ROOT + "/<_id>/", methods=["PUT"])
     def update(_id: str):
@@ -144,11 +157,11 @@ def create_app():
             _events_logic.update(_id, event)
             return "Обновлено", 200
         except ValueError as ex:
-            return f"Not found: {ex}", 404
+            return f"Ошибка: {ex}", 404
         except ApiException as ex:
-            return f"API error: {ex}", 400
-        except Exception as ex:
-            return f"failed to UPDATE with: {ex}", 500
+            return f"Ошибка API: {ex}", 400
+        except (ImportError, AttributeError, RuntimeError) as ex:
+            return f"Ошибка при обновлении: {ex}", 500
 
     @app.route(EVENTS_API_ROOT + "/<_id>/", methods=["DELETE"])
     def delete(_id: str):
@@ -162,7 +175,8 @@ def create_app():
         """
         try:
             _events_logic.delete(_id)
-            return "deleted", 200
-        except Exception as ex:
-            return f"failed to DELETE with: {ex}", 500
+            return "Удалено", 200
+        except (ImportError, AttributeError, RuntimeError) as ex:
+            return f"Ошибка при удалении: {ex}", 500
+
     return app
