@@ -156,10 +156,10 @@ def create_app():
             event = _from_raw(data)
             _events_logic.update(_id, event)
             return "Обновлено", 200
-        except ValueError as ex:
-            return f"Ошибка: {ex}", 404
         except ApiException as ex:
             return f"Ошибка API: {ex}", 400
+        except ValueError as ex:
+            return f"Ошибка: {ex}", 404
         except (ImportError, AttributeError, RuntimeError) as ex:
             return f"Ошибка при обновлении: {ex}", 500
 
