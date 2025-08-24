@@ -12,25 +12,25 @@ python3 run.py run
 
 ### добавление новой заметки
 ```
-curl http://127.0.0.1:5000/api/v1/events/ -X POST -d "YYYY-MM-DD|title|text"
+curl farid19.pythonanywhere.com/api/v1/events/ -X POST -d "YYYY-MM-DD|title|text"
 ```
 
 ### получение всего списка заметок
 ```
-curl http://127.0.0.1:5000/api/v1/events/
+curl farid19.pythonanywhere.com/api/v1/events/
 ```
 
 ### получение заметки по идентификатору / ID == 1
 ```
-curl http://127.0.0.1:5000/api/v1/events/1/
+curl farid19.pythonanywhere.com/api/v1/events/1/
 ```
 
 ### обновление текста заметки по идентификатору / ID == 1 /  новый текст == "new text"
 ```
-curl http://127.0.0.1:5000/api/v1/events/1/ -X PUT -d "|title|new text"
+curl farid19.pythonanywhere.com/api/v1/events/1/ -X PUT -d "|title|new text"
 ```
 
 ### удаление заметки по идентификатору / ID == 1
 ```
-curl http://127.0.0.1:5000/api/v1/events/1/ -X DELETE
+curl farid19.pythonanywhere.com/api/v1/events/1/ -X DELETE
 ```

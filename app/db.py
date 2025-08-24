@@ -47,7 +47,7 @@ class EventDB:
             DBException: Если операция получения списка не удалась
         """
         try:
-            return self._storage.list()
+            return self._storage.list_events()
         except Exception as ex:
             raise DBException("failed LIST operation with:") from ex
 
