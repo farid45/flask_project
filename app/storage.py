@@ -1,6 +1,6 @@
 """Модуль локального хранилища для событий."""
 
-from typing import List
+
 import app.model as model
 
 
@@ -14,7 +14,7 @@ class StorageException(Exception):
 
 class LocalStorage:
     """Класс для локального хранения событий в памяти.
-    
+
     Обеспечивает базовые CRUD операции для управления событиями.
     """
     def __init__(self) -> None:
@@ -24,10 +24,10 @@ class LocalStorage:
 
     def create(self, events: model.Events) -> str:
         """Создает новое событие в хранилище.
-        
+
         Args:
             events: Объект Events для создания
-            
+
         Returns:
             str: ID созданного события
         """
@@ -36,9 +36,9 @@ class LocalStorage:
         self._storage[events.id] = events
         return events.id
 
-    def list_events(self) -> List[model.Events]:
+    def list_events(self) -> list[model.Events]:
         """Возвращает список всех событий из хранилища.
-        
+
         Returns:
             List[model.Events]: Список всех объектов событий
         """
@@ -46,13 +46,13 @@ class LocalStorage:
 
     def read(self, _id: str) -> model.Events:
         """Возвращает событие по указанному ID.
-        
+
         Args:
             _id: ID события для поиска
-            
+
         Returns:
             model.Events: Найденный объект события
-            
+
         Raises:
             StorageException: Если событие с указанным ID не найдено
         """
@@ -62,11 +62,11 @@ class LocalStorage:
 
     def update(self, _id: str, note: model.Events) -> None:
         """Обновляет существующее событие в хранилище.
-        
+
         Args:
             _id: ID события для обновления
             note: Объект Events с новыми данными
-            
+
         Raises:
             StorageException: Если событие с указанным ID не найдено
         """
@@ -77,10 +77,10 @@ class LocalStorage:
 
     def delete(self, _id: str) -> None:
         """Удаляет событие по указанному ID из хранилища.
-        
+
         Args:
             _id: ID события для удаления
-            
+
         Raises:
             StorageException: Если событие с указанным ID не найдено
         """

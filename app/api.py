@@ -1,10 +1,11 @@
 """API для управления событиями."""
 
 from itertools import count
+
 from flask import Flask, request
+
 import app.logic as logic
 import app.model as model
-
 
 # Константы API
 API_VERSION = "v1"
@@ -12,6 +13,9 @@ API_ROOT = f"/api/{API_VERSION}"
 EVENTS_API_ROOT = f"{API_ROOT}/events"
 
 # Логика работы с событиями
+
+
+
 _events_logic = logic.EventsLogic()
 _event_counter = count(1)
 
@@ -26,13 +30,13 @@ class StorageException(Exception):
 
 def _from_raw(raw_note: str) -> model.Events:
     """Преобразует сырые данные в объект Events.
-    
+
     Args:
         raw_note: Строка в формате 'id|date|title|text' или 'date|title|text'
-    
+
     Returns:
         Объект Events
-        
+
     Raises:
         ApiException: При неверном формате данных или даты
     """
@@ -66,10 +70,10 @@ def _from_raw(raw_note: str) -> model.Events:
 
 def _to_raw(events: model.Events) -> str:
     """Преобразует объект Events в сырые данные.
-    
+
     Args:
         events: Объект Events для преобразования
-        
+
     Returns:
         Строка в формате 'id|date|title|text' или 'date|title|text'
     """
@@ -81,7 +85,7 @@ def _to_raw(events: model.Events) -> str:
 
 def create_app():
     """Создает и настраивает Flask приложение.
-    
+
     Returns:
         Flask приложение с настроенными маршрутами API
     """
@@ -90,7 +94,7 @@ def create_app():
     @app.route(EVENTS_API_ROOT + "/", methods=["POST"])
     def create():
         """Создает новое событие.
-        
+
         Returns:
             Ответ с ID созданного события или сообщение об ошибке
         """
@@ -109,7 +113,7 @@ def create_app():
     @app.route(EVENTS_API_ROOT + "/", methods=["GET"])
     def list_events():
         """Возвращает список всех событий.
-        
+
         Returns:
             Список событий в сыром формате или сообщение об ошибке
         """
@@ -125,10 +129,10 @@ def create_app():
     @app.route(EVENTS_API_ROOT + "/<_id>/", methods=["GET"])
     def read(_id: str):
         """Возвращает событие по ID.
-        
+
         Args:
             _id: ID события для поиска
-            
+
         Returns:
             Событие в сыром формате или сообщение об ошибке
         """
@@ -144,10 +148,10 @@ def create_app():
     @app.route(EVENTS_API_ROOT + "/<_id>/", methods=["PUT"])
     def update(_id: str):
         """Обновляет существующее событие.
-        
+
         Args:
             _id: ID события для обновления
-            
+
         Returns:
             Сообщение об успехе или ошибке
         """
@@ -166,10 +170,10 @@ def create_app():
     @app.route(EVENTS_API_ROOT + "/<_id>/", methods=["DELETE"])
     def delete(_id: str):
         """Удаляет событие по ID.
-        
+
         Args:
             _id: ID события для удаления
-            
+
         Returns:
             Сообщение об успехе или ошибке
         """

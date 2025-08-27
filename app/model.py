@@ -6,7 +6,7 @@ from typing import Optional
 
 class Events:
     """Класс представляющий модель события.
-    
+
     Attributes:
         id: Уникальный идентификатор события
         title: Заголовок события
@@ -26,10 +26,10 @@ class Events:
     @staticmethod
     def validate_date(date_str: str) -> bool:
         """Проверяет корректность формата даты.
-        
+
         Args:
             date_str: Строка с датой для проверки
-            
+
         Returns:
             bool: True если дата в формате YYYY-MM-DD, иначе False
         """
@@ -43,7 +43,7 @@ class Events:
     @staticmethod
     def get_current_date() -> str:
         """Возвращает текущую дату в стандартном формате.
-        
+
         Returns:
             str: Текущая дата в формате YYYY-MM-DD
         """

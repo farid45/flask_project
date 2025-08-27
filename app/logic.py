@@ -1,30 +1,30 @@
 """Модуль бизнес-логики для работы с событиями."""
 
-from typing import Dict, List
+
 from app.model import Events as EventsModel
 
 
 class EventsLogic:
     """Класс для управления бизнес-логикой событий.
-    
+
     Обеспечивает CRUD операции, валидацию данных и управление
     индексами для быстрого поиска событий по датам.
     """
     def __init__(self) -> None:
         """Инициализирует хранилище событий и индекс по датам."""
-        self._storage: Dict[str, EventsModel] = {}
-        self._date_index: Dict[str, str] = {}  # date -> event_id
+        self._storage: dict[str, EventsModel] = {}
+        self._date_index: dict[str, str] = {}  # date -> event_id
 
 
     def create(self, event: EventsModel) -> str:
         """Создает новое событие с валидацией данных.
-        
+
         Args:
             event: Объект EventsModel для создания
-            
+
         Returns:
             str: ID созданного события
-            
+
         Raises:
             ValueError: При неверном формате даты или конфликте дат
         """
@@ -47,9 +47,9 @@ class EventsLogic:
         return event_id
 
 
-    def list_events(self) -> List[EventsModel]:
+    def list_events(self) -> list[EventsModel]:
         """Возвращает список всех событий.
-        
+
         Returns:
             List[EventsModel]: Список всех объектов событий
         """
@@ -58,10 +58,10 @@ class EventsLogic:
 
     def read(self, _id: str) -> EventsModel:
         """Возвращает событие по ID.
-        
+
         Args:
             _id: ID события для поиска
-            
+
         Returns:
             EventsModel: Найденное событие или None
         """
@@ -70,13 +70,13 @@ class EventsLogic:
 
     def read_by_date(self, date_str: str) -> EventsModel:
         """Получить событие по дате.
-        
+
         Args:
             date_str: Дата в формате YYYY-MM-DD
-            
+
         Returns:
             EventsModel: Событие на указанную дату или None
-            
+
         Raises:
             ValueError: При неверном формате даты
         """
@@ -90,11 +90,11 @@ class EventsLogic:
 
     def update(self, _id: str, event: EventsModel) -> None:
         """Обновляет существующее событие.
-        
+
         Args:
             _id: ID события для обновления
             event: Объект EventsModel с новыми данными
-            
+
         Raises:
             ValueError: Если событие не найдено или неверный формат даты
         """
@@ -127,7 +127,7 @@ class EventsLogic:
 
     def delete(self, _id: str) -> None:
         """Удаляет событие по ID.
-        
+
         Args:
             _id: ID события для удаления
         """
@@ -142,11 +142,11 @@ class EventsLogic:
 
     def is_date_available(self, date_str: str, exclude_event_id: str = None) -> bool:
         """Проверяет, доступна ли дата для создания события.
-        
+
         Args:
             date_str: Дата для проверки
             exclude_event_id: ID события, которое следует исключить из проверки
-            
+
         Returns:
             bool: True если дата доступна, иначе False
         """
