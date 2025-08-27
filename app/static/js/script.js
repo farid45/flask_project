@@ -63,7 +63,7 @@ async function loadEvents() {
     }
 }
 
-// Парсинг данных событий из сырого формата
+// Парсинг данных событий
 function parseEventsData(rawData) {
     if (!rawData.trim()) return [];
     
