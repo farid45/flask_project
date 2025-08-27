@@ -2,7 +2,7 @@
 
 from itertools import count
 
-from flask import Flask, request
+from flask import Flask, render_template, request
 
 import app.logic as logic
 import app.model as model
@@ -90,6 +90,15 @@ def create_app():
         Flask приложение с настроенными маршрутами API
     """
     app = Flask(__name__)
+
+    @app.route('/')
+    def index():
+        """Создаем фронт.
+
+        Returns:
+            index.html
+        """
+        return render_template('index.html')
 
     @app.route(EVENTS_API_ROOT + "/", methods=["POST"])
     def create():

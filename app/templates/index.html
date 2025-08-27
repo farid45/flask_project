@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календарь событий</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Календарь событий</h1>
+        </header>
+
+        <div class="main-content">
+            <!-- Форма добавления события -->
+            <div class="form-section">
+                <h2>Добавить новое событие</h2>
+                <form id="eventForm">
+                    <div class="form-group">
+                        <label for="date">Дата:</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="title">Заголовок:</label>
+                        <input type="text" id="title" name="title" maxlength="30" 
+                               placeholder="Макс. 30 символов" required>
+                        <span class="char-counter" id="titleCounter">0/30</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="text">Описание:</label>
+                        <textarea id="text" name="text" maxlength="200" 
+                                 placeholder="Макс. 200 символов" rows="3" required></textarea>
+                        <span class="char-counter" id="textCounter">0/200</span>
+                    </div>
+                    
+                    <button type="submit">Добавить событие</button>
+                </form>
+            </div>
+
+            <!-- Список событий -->
+            <div class="events-section">
+                <h2>Мои события</h2>
+                <div class="filters">
+                    <input type="month" id="monthFilter" onchange="filterEvents()">
+                    <button onclick="loadEvents()">Обновить</button>
+                </div>
+                
+                <div id="eventsList" class="events-list">
+                    <p class="loading">Загрузка событий...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно для редактирования -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Редактировать событие</h2>
+                <form id="editForm">
+                    <input type="hidden" id="editId">
+                    
+                    <div class="form-group">
+                        <label for="editDate">Дата:</label>
+                        <input type="date" id="editDate" name="date" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editTitle">Заголовок:</label>
+                        <input type="text" id="editTitle" name="title" maxlength="30" required>
+                        <span class="char-counter" id="editTitleCounter">0/30</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editText">Описание:</label>
+                        <textarea id="editText" name="text" maxlength="200" rows="3" required></textarea>
+                        <span class="char-counter" id="editTextCounter">0/200</span>
+                    </div>
+                    
+                    <button type="submit">Сохранить изменения</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

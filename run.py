@@ -1,3 +1,4 @@
+"""Точка входа"""
 
 from app.api import create_app
 
